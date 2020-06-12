@@ -8,10 +8,6 @@ from collections import defaultdict
 import socket
 import threading
 
-from qcodes.instrument_drivers.sqdlab import SIM928
-
-
-
 @Pyro4.expose
 class Server():
     def __init__(self):

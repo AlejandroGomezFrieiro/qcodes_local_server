@@ -1,24 +1,21 @@
 ##### This file creates a remote Pyro4 server based on the old qtlab version, but adapted to modern Python 3
-
-import qcodes
 import Pyro4
-import numpy as np
 import sys
-from collections import defaultdict
 import socket
 import threading
 
+Pyro4.config.SERIALIZER = 'pickle'
+Pyro4.config.SERIALIZERS_ACCEPTED = ['json','marshal','serpent', 'pickle']
 @Pyro4.expose
 class Server():
     def __init__(self):
         print('Starting Pyro4 server')
         self.instruments = dict()
-    
-    @classmethod
-    def create_instrument(instrument_class: class, name: str, address: str, **kwargs):
+    @staticmethod
+    def create_instrument(instrument_class, *args, **kwargs):
         '''
         Returns and instance of a class of type instrument_class from a name and an ip address, passing **kwargs'''
-        return instrument_class(name=name, address=address, **kwargs)
+        return instrument_class(*args, **kwargs)
 
     def close(self):
         print('Stopping Pyro4 Server')
@@ -33,11 +30,11 @@ def main():
     #local_IP = '192.168.1.'
 
 
-    if local_IP.startswith('10.184.'):
+    if local_IP.startswith('10.184.25.'):
         daemon = Pyro4.Daemon(host=local_IP) # Rack 3
     else:
         print('Default IP method does not work. \n')
-        print('Please check your settings and add the proper IP')
+        print('Please check the server.py file local_IP variable and add the proper IP')
         sys.exit('Exiting...')
 
     # Create the daemon's uri
@@ -55,4 +52,3 @@ if __name__=="__main__":
     main()
 
 # Create a daemon to be accessed, in this IP
-#

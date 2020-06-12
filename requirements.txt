@@ -1,0 +1,48 @@
+applicationinsights==0.11.9
+attrs==19.3.0
+backcall==0.1.0
+certifi==2020.4.5.1
+colorama==0.4.3
+cycler==0.10.0
+decorator==4.4.2
+h5py==2.10.0
+importlib-metadata @ file:///D:/bld/importlib-metadata_1591451992199/work
+ipython==7.13.0
+ipython-genutils==0.2.0
+jedi==0.17.0
+jsonschema==3.2.0
+kiwisolver==1.2.0
+matplotlib==3.2.1
+numpy @ file:///D:/bld/numpy_1591485481352/work
+pandas @ file:///D:/bld/pandas_1590752941015/work
+parso==0.7.0
+pickleshare==0.7.5
+prompt-toolkit==3.0.5
+Pygments==2.6.1
+pyparsing==2.4.7
+PyQt5==5.12.3
+PyQt5-sip==4.19.18
+PyQtChart==5.12
+PyQtWebEngine==5.12.1
+pyreadline==2.1
+Pyro4 @ file:///home/conda/feedstock_root/build_artifacts/pyro4_1588174595613/work
+pyrsistent==0.16.0
+python-dateutil==2.8.1
+pytz==2020.1
+PyVISA @ file:///D:/bld/pyvisa_1589237774336/work
+pyzmq==19.0.1
+qcodes==0.13.0
+requirements-parser==0.2.0
+ruamel.yaml==0.16.6
+ruamel.yaml.clib==0.2.0
+serpent==1.30.2
+six @ file:///home/conda/feedstock_root/build_artifacts/six_1590081179328/work
+tabulate==0.8.7
+tornado==6.0.4
+tqdm @ file:///home/conda/feedstock_root/build_artifacts/tqdm_1591181521996/work
+traitlets==4.3.3
+wcwidth==0.1.9
+websockets==8.1
+wincertstore==0.2
+wrapt==1.12.1
+zipp==3.1.0

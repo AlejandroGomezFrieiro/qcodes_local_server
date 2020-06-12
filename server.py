@@ -1,4 +1,6 @@
 ##### This file creates a remote Pyro4 server based on the old qtlab version, but adapted to modern Python 3
+
+#TODO:Start instruments in this object, and then serialize properly
 import Pyro4
 import sys
 import socket
@@ -6,16 +8,27 @@ import threading
 
 Pyro4.config.SERIALIZER = 'pickle'
 Pyro4.config.SERIALIZERS_ACCEPTED = ['json','marshal','serpent', 'pickle']
+
+from qcodes import Instrument
+
+test_instrument = Instrument('test_name')
+
 @Pyro4.expose
 class Server():
     def __init__(self):
         print('Starting Pyro4 server')
         self.instruments = dict()
-    @staticmethod
-    def create_instrument(instrument_class, *args, **kwargs):
+
+    def create_instrument(self, instrument_class, *args, **kwargs):
         '''
         Returns and instance of a class of type instrument_class from a name and an ip address, passing **kwargs'''
-        return instrument_class(*args, **kwargs)
+        instrument = instrument_class(*args, **kwargs)
+        self.instruments['test'] = instrument
+        return self.instruments['test']
+    
+    def get_instruments(self):
+        return self.instruments
+
 
     def close(self):
         print('Stopping Pyro4 Server')
@@ -45,7 +58,6 @@ def main():
     #     fh.write(str(uri))
     print(uri)
 
-    print('Starting loop')
     daemon.requestLoop()
 
 if __name__=="__main__":

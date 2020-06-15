@@ -31,7 +31,6 @@ python-dateutil==2.8.1
 pytz==2020.1
 PyVISA @ file:///D:/bld/pyvisa_1589237774336/work
 pyzmq==19.0.1
-qcodes==0.13.0
 requirements-parser==0.2.0
 ruamel.yaml==0.16.6
 ruamel.yaml.clib==0.2.0

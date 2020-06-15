@@ -67,7 +67,7 @@ class QcodesRemoteClient(object):
     def __setattr__(self, pname, value):
         """Block accidential attribute assignment."""
         if pname.startswith('_'):
-            return super(RemoteFPGA, self).__setattr__(pname, value)
+            return super(QcodesRemoteClient, self).__setattr__(pname, value)
         if (hasattr(self, pname) and not callable(value) and 
             (not hasattr(value, 'get') or not hasattr(value, 'set'))):
             raise AttributeError(
@@ -75,10 +75,10 @@ class QcodesRemoteClient(object):
                 'Use {0}.set(value) to set the value of {0}.').format(pname)
             )
         else:
-            super(RemoteFPGA, self).__setattr__(pname, value)
+            super(QcodesRemoteClient, self).__setattr__(pname, value)
 
     def __repr__(self):
-        parts = super(RemoteFPGA, self).__repr__().split(' ')
+        parts = super(QcodesRemoteClient, self).__repr__().split(' ')
         # <uqtools.qtlab.Instrument "{name}" ({qtlab_name}) at 0x...>
         parts[1] = '"{0}"'.format(self._name)
         if self._name != self._remote_name:

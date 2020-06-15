@@ -110,7 +110,7 @@ def main():
     uri = daemon.register(Server)
 
     # Write the daemon's uri into the drive.
-    with open(r'Z:/SMP/Research/EQUS-SQDLab/DataAnalysis/Notebooks/qcodes/Server.txt' , 'w') as fh:
+    with open(r'path_to_drive/DataAnalysis/Notebooks/qcodes/Server_uri.txt' , 'w') as fh:
         fh.write(str(uri))
     print(uri)
 

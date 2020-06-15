@@ -42,7 +42,7 @@ class QcodesRemoteClient(object):
             return result
     
     def __dir__(self):
-        attrs = dir(super(RemoteFPGA, self))
+        attrs = dir(super(QcodesRemote, self))
         attrs += self._proxy.get_parameters(self._remote_name)
         attrs += self._proxy.get_function_names(self._remote_name)
         return list(set(attrs))

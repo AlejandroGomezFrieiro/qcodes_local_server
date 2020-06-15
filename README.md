@@ -4,8 +4,8 @@ In order to install the server.py file, follow the next steps:
 
 - Git clone this repository to a folder, and cd to it
 - Create a new environment `conda create -n server` and activate it using `conda activate server`
-- Install all the dependencies on the server side using `pip install -r requirements.txt`
-- Make sure to install qcodes from our sqdlab repository to access all our instruments. Follow the instructions on [https://github.com/sqdlab/Qcodes](https://github.com/sqdlab/Qcodes) or on our [Wiki](https://wiki.smp.uq.edu.au/EQuS-SQDLab/index.php/Software_Manual) (request access if not yet allowed)
+- Install all the dependencies on the server side using `pip install -r requirements.txt`. This installation includes our version of qcodes.
+<!-- - Make sure to install qcodes from our sqdlab repository to access all our instruments. Follow the instructions on [https://github.com/sqdlab/Qcodes](https://github.com/sqdlab/Qcodes) or on our [Wiki](https://wiki.smp.uq.edu.au/EQuS-SQDLab/index.php/Software_Manual) (request access if not yet allowed) -->
 
 Use of the server is as follows:
 - First open the python file in a text editor. Inspect the file, create instances of all the instruments you need, and add all the instruments to the station object

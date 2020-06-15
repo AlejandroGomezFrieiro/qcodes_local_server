@@ -1,34 +1,88 @@
 ##### This file creates a remote Pyro4 server based on the old qtlab version, but adapted to modern Python 3
-
-#TODO:Start instruments in this object, and then serialize properly
 import Pyro4
 import sys
 import socket
 import threading
+import qcodes as qc
+import inspect
+from collections import defaultdict
+
 
 Pyro4.config.SERIALIZER = 'pickle'
 Pyro4.config.SERIALIZERS_ACCEPTED = ['json','marshal','serpent', 'pickle']
 
 from qcodes import Instrument
 
-test_instrument = Instrument('test_name')
+## Add all the instrument you want to use to the station in the same way the DummyInstrument is added
+
+from qcodes.tests.instrument_mocks import DummyInstrument
+
+test_instrument = DummyInstrument('test_name')
+
+station = qc.Station()
+station.add_component(test_instrument)
 
 @Pyro4.expose
-class Server():
+class QcodesRemoteServer(object):
     def __init__(self):
         print('Starting Pyro4 server')
-        self.instruments = dict()
+        self.locks = defaultdict(lambda: threading.Lock())
 
-    def create_instrument(self, instrument_class, *args, **kwargs):
-        '''
-        Returns and instance of a class of type instrument_class from a name and an ip address, passing **kwargs'''
-        instrument = instrument_class(*args, **kwargs)
-        self.instruments['test'] = instrument
-        return self.instruments['test']
     
-    def get_instruments(self):
-        return self.instruments
+    def ins_get(self, instrument_name: str, parameter: str):
+        '''Get the value of a parameter inside the instrument'''
+        with self.locks['instrument']:
+            value = station.components[instrument_name].get(parameter)
+        return value
 
+    def ins_set(self, instrument_name: str, parameter: str, args, kwargs=None):
+        '''set the value of parameter of instrument ins'''
+        with self.locks['instrument']:
+            return station.components[instrument_name].set(parameter, *args, **kwargs)
+
+    def ins_call(self, instrument_name: str, function, args, kwargs):
+        '''call function of instrument ins with *args and **kwargs'''
+        func = getattr(station.components[instrument_name], function)
+        with self.locks['ins']:
+            result = func(*args, **kwargs)
+        if isinstance(result, np.ndarray):
+            result = pickle.dumps(result)
+        return result
+
+    def get_instrument_names(self):
+        '''get the names of all known instruments'''
+        tmp = []
+        for component in station.components:
+            tmp.append(component)
+        return tmp
+
+    def get_function_names(self, instrument_name: str):
+        '''get names of the functions registered in instrument ins'''
+        tmp_instrument = station.components[instrument_name]
+        return tmp_instrument.functions
+
+    def get_parameters(self, instrument_name: str):
+        '''get names of the functions registered in instrument ins'''
+        tmp_instrument = station.components[instrument_name]
+        tmp = []
+        for parameter in tmp_instrument.parameters:
+            tmp.append(parameter)
+        return tmp
+
+    def get_function_spec(self, instrument_name, function):
+        '''get calling convention and documentation of function of instrument ins'''
+        if function not in self.get_function_names(instrument_name):
+            return None
+        func = getattr(station.components[instrument_name], function)
+        argspec = inspect.getargspec(func)
+        return dict(argspec=dict(args=argspec.args,
+                                 varargs=argspec.varargs,
+                                 keywords=argspec.keywords,
+                                 defaults=argspec.defaults, 
+                                 ndefaults=0 if argspec.defaults is None else 
+                                           len(argspec.defaults)),
+                    calldoc=inspect.formatargspec(*argspec), 
+                    doc=getattr(func, '__doc__'))
 
     def close(self):
         print('Stopping Pyro4 Server')

@@ -35,10 +35,10 @@ class QcodesRemoteServer(object):
             value = station.components[instrument_name].get(parameter)
         return value
 
-    def ins_set(self, instrument_name: str, parameter: str, args, kwargs=None):
+    def ins_set(self, instrument_name: str, parameter: str, args):
         '''set the value of parameter of instrument ins'''
         with self.locks['instrument']:
-            return station.components[instrument_name].set(parameter, *args, **kwargs)
+            return station.components[instrument_name].set(parameter, *args)
 
     def ins_call(self, instrument_name: str, function, args, kwargs):
         '''call function of instrument ins with *args and **kwargs'''
@@ -91,18 +91,20 @@ class QcodesRemoteServer(object):
         self.close()
 
 def main():
-    local_IP = socket.gethostbyname(socket.getfqdn())
+    ########COMPLETE THIS STRING WITH THE LAB IP OF THE COMPUTER YOU ARE CREATING THE SERVER IN
+    local_IP = '192.168.1.xxx'
     print("Default IP is "+local_IP)
-    ############IF IT DOES NOT RUN BY DEFAULT, COMPLETE THIS STRING WITH THE LAB IP OF THE SYSTEM
-    #local_IP = '192.168.1.'
+
+    daemon = Pyro4.Daemon(host=local_IP)
 
 
-    if local_IP.startswith('10.184.25.'):
-        daemon = Pyro4.Daemon(host=local_IP) # Rack 3
-    else:
-        print('Default IP method does not work. \n')
-        print('Please check the server.py file local_IP variable and add the proper IP')
-        sys.exit('Exiting...')
+
+    # if local_IP.startswith('192.168.1.'):
+    #     daemon = Pyro4.Daemon(host=local_IP) # Rack 3
+    # else:
+    #     print('Default IP method does not work. \n')
+    #     print('Please check the server.py file local_IP variable and add the proper IP')
+    #     sys.exit('Exiting...')
 
     # Create the daemon's uri
     uri = daemon.register(Server)

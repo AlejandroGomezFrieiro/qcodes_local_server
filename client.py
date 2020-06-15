@@ -32,7 +32,7 @@ class QcodesRemoteClient(object):
         return self._proxy.ins_set(self._remote_name, pname, args)
     
     def call(self, pname, *args, **kwargs):
-        result =  self._proxy.ins_call(self._remote_name, pname, args)
+        result =  self._proxy.ins_call(self._remote_name, pname, args, kwargs)
 #         return result
         try:
             return pickle.loads(bytes(result, encoding='utf-8'), encoding='bytes')

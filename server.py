@@ -108,8 +108,8 @@ def main():
     uri = daemon.register(Server)
 
     # Write the daemon's uri into the drive.
-    # with open(r'Z:/SMP/Research/EQUS-SQDLab/DataAnalysis/Notebooks/qcodes/FPGA_Rack3_URI.txt' , 'w') as fh:
-    #     fh.write(str(uri))
+    with open(r'Z:/SMP/Research/EQUS-SQDLab/DataAnalysis/Notebooks/qcodes/Server.txt' , 'w') as fh:
+        fh.write(str(uri))
     print(uri)
 
     daemon.requestLoop()

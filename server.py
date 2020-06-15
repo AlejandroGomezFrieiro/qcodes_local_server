@@ -92,7 +92,7 @@ class QcodesRemoteServer(object):
 
 def main():
     ########COMPLETE THIS STRING WITH THE LAB IP OF THE COMPUTER YOU ARE CREATING THE SERVER IN
-    local_IP = '192.168.1.xxx'
+    local_IP = '10.184.25.86'
     print("Default IP is "+local_IP)
 
     daemon = Pyro4.Daemon(host=local_IP)
@@ -107,11 +107,11 @@ def main():
     #     sys.exit('Exiting...')
 
     # Create the daemon's uri
-    uri = daemon.register(Server)
+    uri = daemon.register(QcodesRemoteServer)
 
     # Write the daemon's uri into the drive.
-    with open(r'path_to_drive/DataAnalysis/Notebooks/qcodes/Server_uri.txt' , 'w') as fh:
-        fh.write(str(uri))
+    # with open(r'path_to_drive/DataAnalysis/Notebooks/qcodes/Server_uri.txt' , 'w') as fh:
+    #     fh.write(str(uri))
     print(uri)
 
     daemon.requestLoop()

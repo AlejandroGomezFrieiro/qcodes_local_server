@@ -92,7 +92,7 @@ class QcodesRemoteServer(object):
 
 def main():
     ########COMPLETE THIS STRING WITH THE LAB IP OF THE COMPUTER YOU ARE CREATING THE SERVER IN
-    local_IP = '10.184.25.86'
+    local_IP = '192.168.1.xxx'
     print("Default IP is "+local_IP)
 
     daemon = Pyro4.Daemon(host=local_IP)

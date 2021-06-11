@@ -41,7 +41,7 @@ tornado==6.0.4
 tqdm @ file:///home/conda/feedstock_root/build_artifacts/tqdm_1591181521996/work
 traitlets==4.3.3
 wcwidth==0.1.9
-websockets==8.1
+websockets==9.1
 wincertstore==0.2
 wrapt==1.12.1
 zipp==3.1.0

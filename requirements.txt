@@ -7,7 +7,7 @@ cycler==0.10.0
 decorator==4.4.2
 h5py==2.10.0
 importlib-metadata @ file:///D:/bld/importlib-metadata_1591451992199/work
-ipython==7.13.0
+ipython==7.16.3
 ipython-genutils==0.2.0
 jedi==0.17.0
 jsonschema==3.2.0
